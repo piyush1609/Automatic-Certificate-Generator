@@ -1,0 +1,16 @@
+import pandas as pd
+from PIL import Image, ImageDraw, ImageFont
+data = pd.read_csv(r"C:\Users\Admin\Desktop\samplename_list.csv")
+names = data['name'].to_list()
+max_no = len(names)
+for index, name in enumerate(names, start=1):
+    image = Image.open(r"C:\Users\Admin\Desktop\sampletemplate.png")
+    draw = ImageDraw.Draw(image)
+    W, H = (474, 290)
+    text_color = (43, 61, 136)
+    font = ImageFont.truetype(r"C:\Windows\Fonts\Arial.ttf", 42, encoding="unicode")
+    w, h = draw.textsize(name.title(), font=font)
+    location = ((W-w)/2, (H-h)/2)
+    draw.text(location, name.title(), fill=text_color, font=font)
+    image.save(r"C:\Users\Admin\Documents\certificate\{}.png".format(name))
+    print(f"({index}/{max_no}) Certificate created for {name.title()}")
